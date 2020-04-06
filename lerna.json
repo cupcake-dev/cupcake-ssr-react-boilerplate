@@ -1,0 +1,10 @@
+{
+  "packages": [
+    "packages/common/*",
+    "packages/server/*",
+    "packages/web/*"
+  ],
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "version": "0.0.0"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "cupcake-boilerplate",
+  "private": true,
+  "scripts": {
+    "lerna": "./node_modules/.bin/lerna",
+    "start:dev": "yarn lerna run start:dev"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/server/*",
+      "packages/web/*",
+      "packages/common/*"
+    ],
+    "nohoist": [
+      "**/jest",
+      "**/babel-jest"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  },
+  "dependencies": {}
+}
