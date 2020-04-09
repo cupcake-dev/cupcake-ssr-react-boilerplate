@@ -1,17 +1,33 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AuthPageContainer } from "../components/styled-elements/styled-elements";
+import { withReduxDynamicModules } from "@cupcake/webcore";
+import {
+	getAuthModule,
+	signUpSelectors,
+	signUpActions,
+} from "@cupcake/auth.module";
+import {
+	PageContainer,
+	Form,
+	InputContainer,
+	Label,
+	InputText,
+	Button,
+} from "../components/styled-elements/";
 
 export interface SignUpProps {}
 
-const SignUp: React.FC<any> = () => {
+const SignUp: React.FC<SignUpProps> = () => {
 	const [isPending, setIsPending] = useState(false);
-	// TODO (add redux and create selectors)
-	// const login = useSelector();
-	// const email = useSelector();
-	// const password = useSelector();
-	// const passwordConfirm = useSelector();
-	// const dispatch = useDispatch();
+
+	const status = useSelector(signUpSelectors.selectSignUpStatus);
+	const login: string = useSelector(signUpSelectors.selectLogin);
+	const email: string = useSelector(signUpSelectors.selectEmail);
+	const password: string = useSelector(signUpSelectors.selectPassword);
+	const passwordConfirm: string = useSelector(
+		signUpSelectors.selectPasswordConfirm
+	);
+	const dispatch = useDispatch();
 
 	const handleSignUpSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -20,72 +36,88 @@ const SignUp: React.FC<any> = () => {
 		setTimeout(() => setIsPending(false), 500);
 	};
 
-	const handleLoginChange = (e: ChangeEvent<HTMLInputElement>) => {
-		// dispatch an action to change login in state...
-	};
-	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-		// dispatch an action to change Email in state...
-	};
-	const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-		// dispatch an action to change Password in state...
-	};
-	const handlePasswordConfirmChange = (e: ChangeEvent<HTMLInputElement>) => {
-		// dispatch an action to change PasswordConfirm in state...
-	};
+	const handleLoginChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			// dispatch an action to change login in state...
+			dispatch(new signUpActions.ChangeLogin(e.target.value));
+		},
+		[login]
+	);
+	const handleEmailChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			// dispatch an action to change Email in state...
+			dispatch(new signUpActions.ChangeEmail(e.target.value));
+		},
+		[email]
+	);
+	const handlePasswordChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			// dispatch an action to change Password in state...
+			dispatch(new signUpActions.ChangePassword(e.target.value));
+		},
+		[password]
+	);
+	const handlePasswordConfirmChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			// dispatch an action to change PasswordConfirm in state...
+			dispatch(new signUpActions.ChangePasswordConfirm(e.target.value));
+		},
+		[passwordConfirm]
+	);
 
 	return (
-		<AuthPageContainer>
-			<form onSubmit={handleSignUpSubmit} className="formWrapper">
-				<div className="inputWrapper">
-					<label htmlFor="login">Login</label>
-					<input
-						// value={login} Uncomment when selectors are ready
+		<PageContainer>
+			<Form onSubmit={handleSignUpSubmit}>
+				<InputContainer>
+					<Label htmlFor="login">Login</Label>
+					<InputText
+						value={login}
 						onChange={handleLoginChange}
 						disabled={isPending}
 						type="text"
 						id="login"
 						placeholder="Your login"
 					/>
-				</div>
-				<div className="inputWrapper">
-					<label htmlFor="email">Email</label>
-					<input
-						// value={email} Uncomment when selectors are ready
+				</InputContainer>
+				<InputContainer>
+					<Label htmlFor="email">Email</Label>
+					<InputText
+						value={email}
 						onChange={handleEmailChange}
 						disabled={isPending}
 						type="text"
 						id="email"
 						placeholder="Your email"
 					/>
-				</div>
-				<div className="inputWrapper">
-					<label htmlFor="password">Password</label>
-					<input
-						// value={password} Uncomment when selectors are ready
+				</InputContainer>
+				<InputContainer>
+					<Label htmlFor="password">Password</Label>
+					<InputText
+						value={password}
 						onChange={handlePasswordChange}
 						disabled={isPending}
 						type="password"
 						id="password"
 						placeholder="Your password"
 					/>
-				</div>
-				<div className="inputWrapper">
-					<label htmlFor="passwordConfirm">Password Confirm</label>
-					<input
-						// value={passwordConfirm} Uncomment when selectors are ready
+				</InputContainer>
+				<InputContainer>
+					<Label htmlFor="passwordConfirm">Password Confirm</Label>
+					<InputText
+						value={passwordConfirm}
 						onChange={handlePasswordConfirmChange}
 						disabled={isPending}
 						type="password"
 						id="passwordConfirm"
 						placeholder="Repeat password"
 					/>
-				</div>
-				<button type="submit" disabled={isPending}>
+				</InputContainer>
+				<Button type="submit" disabled={isPending}>
 					Sign Up
-				</button>
-			</form>
-		</AuthPageContainer>
+				</Button>
+			</Form>
+		</PageContainer>
 	);
 };
 
-export default SignUp;
+export default withReduxDynamicModules(SignUp, [getAuthModule()]);

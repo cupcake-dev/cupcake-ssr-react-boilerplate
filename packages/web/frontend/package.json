@@ -1,5 +1,5 @@
 {
-  "name": "@capcake/frontend",
+  "name": "@cupcake/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/react-redux": "^7.1.7",
     "next": "9.3.4",
+    "next-redux-wrapper": "^5.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-redux": "^7.2.0",
