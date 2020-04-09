@@ -1,6 +1,6 @@
-import { Action } from "redux";
+import { createAction, ActionsUnion } from "@cupcake/common";
 
-export enum ActionTypes {
+export const enum ActionTypes {
 	CHANGE_LOGIN = "[auth/signIn] Change login",
 	CHANGE_PASSWORD = "[auth/signIn] Change password",
 
@@ -9,33 +9,14 @@ export enum ActionTypes {
 	SIGN_IN_FAILURE = "[auth] Sign in failure",
 }
 
-export class ChangeLogin implements Action {
-	readonly type = ActionTypes.CHANGE_LOGIN;
-	constructor(public login: string) {}
-}
-export class ChangePassword implements Action {
-	readonly type = ActionTypes.CHANGE_PASSWORD;
-	constructor(public password: string) {}
-}
+export const signInActions = {
+	ChangeLogin: (login: string) =>
+		createAction(ActionTypes.CHANGE_LOGIN, login),
+	ChangePassword: (password: string) =>
+		createAction(ActionTypes.CHANGE_PASSWORD, password),
+	SignIn: () => createAction(ActionTypes.SIGN_IN),
+	SignInSuccess: () => createAction(ActionTypes.SIGN_IN_SUCCESS),
+	SignInFailure: () => createAction(ActionTypes.SIGN_IN_FAILURE),
+};
 
-export class SignIn implements Action {
-	readonly type = ActionTypes.SIGN_IN;
-	constructor() {}
-}
-
-export class SignInSuccess implements Action {
-	readonly type = ActionTypes.SIGN_IN_SUCCESS;
-	constructor() {}
-}
-
-export class SignInFailure implements Action {
-	readonly type = ActionTypes.SIGN_IN_FAILURE;
-	constructor() {}
-}
-
-export type ActionsAll =
-	| SignIn
-	| SignInSuccess
-	| SignInFailure
-	| ChangeLogin
-	| ChangePassword;
+export type ActionsAll = ActionsUnion<typeof signInActions>;

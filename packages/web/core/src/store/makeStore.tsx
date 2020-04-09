@@ -7,16 +7,6 @@ import {
 } from "redux-dynamic-modules";
 import { getSagaExtension, ISagaModule } from "redux-dynamic-modules-saga";
 
-// @ts-ignore
-const actionToPlainObject: Middleware = (api: MiddlewareAPI<void>) => (
-	// @ts-ignore
-	next: Dispatch<void>
-	// @ts-ignore
-) => <A extends Action>(action: A) => {
-	// @ts-ignore
-	return next(Object.assign({}, action));
-};
-
 export const makeStore: MakeStore = (
 	initialState: any = {},
 	options: MakeStoreOptions
@@ -24,7 +14,6 @@ export const makeStore: MakeStore = (
 	const store: IModuleStore<any> = createStore({
 		initialState: initialState,
 		extensions: [
-			{ middleware: [actionToPlainObject] },
 			getSagaExtension({} /* saga context */),
 		],
 		/*put default modules here*/

@@ -15,13 +15,13 @@ export interface ISignInState {
 	status: SignInStatusEnum;
 }
 
-export enum SignInStatusEnum {
+export const enum SignInStatusEnum {
 	DRAFT = "DRAFT",
 	PENDING = "PENDING",
 	SUCCESS = "SUCCESS",
 	FAIL = "FAIL",
 }
-export enum SignUpStatusEnum {
+export const enum SignUpStatusEnum {
 	DRAFT = "DRAFT",
 	PENDING = "PENDING",
 	SUCCESS = "SUCCESS",

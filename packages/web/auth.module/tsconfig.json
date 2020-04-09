@@ -9,6 +9,8 @@
     "baseUrl": "./",
     "rootDir": "./src",
     "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "jsx": "react"

@@ -30,12 +30,12 @@ export function signInReducer(
 		case ActionTypes.CHANGE_LOGIN:
 			return {
 				...state,
-				login: action.login,
+				login: action.payload,
 			};
 		case ActionTypes.CHANGE_PASSWORD:
 			return {
 				...state,
-				password: action.password,
+				password: action.payload,
 			};
 		default:
 			return state;

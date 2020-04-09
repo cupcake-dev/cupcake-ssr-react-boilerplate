@@ -32,22 +32,22 @@ export function signUpReducer(
 		case ActionTypes.CHANGE_LOGIN:
 			return {
 				...state,
-				login: action.login,
+				login: action.payload,
 			};
 		case ActionTypes.CHANGE_EMAIL:
 			return {
 				...state,
-				email: action.email,
+				email: action.payload,
 			};
 		case ActionTypes.CHANGE_PASSWORD:
 			return {
 				...state,
-				password: action.password,
+				password: action.payload,
 			};
 		case ActionTypes.CHANGE_PASSWORD_CONFIRM:
 			return {
 				...state,
-				passwordConfirm: action.passwordConfirm,
+				passwordConfirm: action.payload,
 			};
 		default:
 			return state;

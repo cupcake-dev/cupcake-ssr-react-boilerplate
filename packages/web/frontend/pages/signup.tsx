@@ -13,7 +13,7 @@ import {
 	Label,
 	InputText,
 	Button,
-} from "../components/styled-elements/";
+} from "../components/ui";
 
 export interface SignUpProps {}
 
@@ -29,40 +29,41 @@ const SignUp: React.FC<SignUpProps> = () => {
 	);
 	const dispatch = useDispatch();
 
+	// TODO useCallback and main logic
 	const handleSignUpSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsPending(true);
-		console.log("Need to add redux logic"); //TODO
+		console.log("Need to add redux logic");
 		setTimeout(() => setIsPending(false), 500);
 	};
 
 	const handleLoginChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change login in state...
-			dispatch(new signUpActions.ChangeLogin(e.target.value));
+			dispatch(signUpActions.ChangeLogin(e.target.value));
 		},
-		[login]
+		[]
 	);
 	const handleEmailChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change Email in state...
-			dispatch(new signUpActions.ChangeEmail(e.target.value));
+			dispatch(signUpActions.ChangeEmail(e.target.value));
 		},
-		[email]
+		[]
 	);
 	const handlePasswordChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change Password in state...
-			dispatch(new signUpActions.ChangePassword(e.target.value));
+			dispatch(signUpActions.ChangePassword(e.target.value));
 		},
-		[password]
+		[]
 	);
 	const handlePasswordConfirmChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change PasswordConfirm in state...
-			dispatch(new signUpActions.ChangePasswordConfirm(e.target.value));
+			dispatch(signUpActions.ChangePasswordConfirm(e.target.value));
 		},
-		[passwordConfirm]
+		[]
 	);
 
 	return (

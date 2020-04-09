@@ -13,7 +13,7 @@ import {
 	Label,
 	InputText,
 	Button,
-} from "../components/styled-elements/";
+} from "../components/ui";
 
 export interface SignInProps {}
 
@@ -25,26 +25,27 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
 	const password: string = useSelector(signInSelectors.selectPassword);
 	const dispatch = useDispatch();
 
+	// TODO useCallback and main logic
 	const handleSignInSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsPending(true);
-		console.log(login, password); //TODO
+		console.log(login, password);
 		setTimeout(() => setIsPending(false), 500);
 	};
 
 	const handleLoginChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change login in state...
-			dispatch(new signInActions.ChangeLogin(e.target.value));
+			dispatch(signInActions.ChangeLogin(e.target.value));
 		},
-		[login]
+		[]
 	);
 	const handlePaswordChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change password in state...
-			dispatch(new signInActions.ChangePassword(e.target.value));
+			dispatch(signInActions.ChangePassword(e.target.value));
 		},
-		[password]
+		[]
 	);
 
 	return (
