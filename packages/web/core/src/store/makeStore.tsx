@@ -14,7 +14,7 @@ export const makeStore: MakeStore = (
 	options: MakeStoreOptions
 ) => {
 	const appServicesContainer = new AppServicesContainer({
-		API_URL: "localhost:8000" // TODO: need to get from env
+		API_URL: "http://localhost:3000/api/" // TODO: need to get from env
 	});
 	const sagaExtension = getSagaExtension<AppServicesContainer>(
 		appServicesContainer

@@ -59,7 +59,7 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
 			setIsPending(false);
 			alert('Something goes wrong')
 		}
-	}, [status]);
+	}, [status]); // TODO: Possible memory leak
 
 	return (
 		<PageContainer>
