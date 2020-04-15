@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
-import { UserInterface } from '@cupcake/common'
 
-export class CreateUserDto implements Omit<UserInterface, "id"> {
+export class CredentialsDto {
   @IsString()
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsString()

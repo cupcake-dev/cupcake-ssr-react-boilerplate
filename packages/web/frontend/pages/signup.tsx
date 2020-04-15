@@ -1,10 +1,18 @@
-import React, { useState, FormEvent, ChangeEvent, useCallback } from "react";
+import React, {
+	useState,
+	FormEvent,
+	ChangeEvent,
+	useCallback,
+	useEffect,
+} from "react";
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { withReduxDynamicModules } from "@cupcake/webcore";
 import {
 	getAuthModule,
 	signUpSelectors,
 	signUpActions,
+	SignUpStatusEnum,
 } from "@cupcake/auth.module";
 import {
 	PageContainer,
@@ -21,29 +29,21 @@ const SignUp: React.FC<SignUpProps> = () => {
 	const [isPending, setIsPending] = useState(false);
 
 	const status = useSelector(signUpSelectors.selectSignUpStatus);
-	const login: string = useSelector(signUpSelectors.selectLogin);
 	const email: string = useSelector(signUpSelectors.selectEmail);
 	const password: string = useSelector(signUpSelectors.selectPassword);
 	const passwordConfirm: string = useSelector(
 		signUpSelectors.selectPasswordConfirm
 	);
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	// TODO useCallback and main logic
-	const handleSignUpSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSignUpSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsPending(true);
-		console.log("Need to add redux logic");
-		setTimeout(() => setIsPending(false), 500);
-	};
+		dispatch(signUpActions.SignUp());
+	}, []);
 
-	const handleLoginChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) => {
-			// dispatch an action to change login in state...
-			dispatch(signUpActions.ChangeLogin(e.target.value));
-		},
-		[]
-	);
 	const handleEmailChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change Email in state...
@@ -66,20 +66,20 @@ const SignUp: React.FC<SignUpProps> = () => {
 		[]
 	);
 
+	useEffect(() => {
+		if (status === SignUpStatusEnum.SUCCESS) {
+			router.replace("/profile", "profile").then(() => {
+				setIsPending(false);
+			});
+		} else if (status === SignUpStatusEnum.FAIL) {
+			setIsPending(false);
+			alert('Something goes wrong')
+		}
+	}, [status]);
+
 	return (
 		<PageContainer>
 			<Form onSubmit={handleSignUpSubmit}>
-				<InputContainer>
-					<Label htmlFor="login">Login</Label>
-					<InputText
-						value={login}
-						onChange={handleLoginChange}
-						disabled={isPending}
-						type="text"
-						id="login"
-						placeholder="Your login"
-					/>
-				</InputContainer>
 				<InputContainer>
 					<Label htmlFor="email">Email</Label>
 					<InputText

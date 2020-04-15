@@ -1,4 +1,5 @@
 export { getAuthModule } from "./auth.module";
+export { SignInStatusEnum, SignUpStatusEnum } from "./auth.contracts";
 
 import * as signInSelectors from "./signin/signin.selectors";
 import { signInActions } from "./signin/signin.actions";

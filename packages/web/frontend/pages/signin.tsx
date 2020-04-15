@@ -1,10 +1,12 @@
-import React, { useState, FormEvent, ChangeEvent, useCallback } from "react";
+import React, { useState, FormEvent, ChangeEvent, useCallback, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { withReduxDynamicModules } from "@cupcake/webcore";
 import {
 	getAuthModule,
 	signInSelectors,
 	signInActions,
+	SignInStatusEnum,
 } from "@cupcake/auth.module";
 import {
 	PageContainer,
@@ -21,22 +23,22 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
 	const [isPending, setIsPending] = useState(false);
 
 	const status = useSelector(signInSelectors.selectSignInStatus);
-	const login: string = useSelector(signInSelectors.selectLogin);
+	const email: string = useSelector(signInSelectors.selectEmail);
 	const password: string = useSelector(signInSelectors.selectPassword);
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	// TODO useCallback and main logic
-	const handleSignInSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSignInSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsPending(true);
-		console.log(login, password);
-		setTimeout(() => setIsPending(false), 500);
-	};
+		dispatch(signInActions.SignIn());
+	}, []);
 
-	const handleLoginChange = useCallback(
+	const handleEmailChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			// dispatch an action to change login in state...
-			dispatch(signInActions.ChangeLogin(e.target.value));
+			dispatch(signInActions.ChangeEmail(e.target.value));
 		},
 		[]
 	);
@@ -48,18 +50,29 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
 		[]
 	);
 
+	useEffect(() => {
+		if (status === SignInStatusEnum.SUCCESS) {
+			router.replace("/profile", "profile").then(() => {
+				setIsPending(false);
+			});
+		} else if (status === SignInStatusEnum.FAIL) {
+			setIsPending(false);
+			alert('Something goes wrong')
+		}
+	}, [status]);
+
 	return (
 		<PageContainer>
 			<Form onSubmit={handleSignInSubmit}>
 				<InputContainer>
-					<Label htmlFor="login">Login</Label>
+					<Label htmlFor="email">Email</Label>
 					<InputText
-						value={login}
-						onChange={handleLoginChange}
+						value={email}
+						onChange={handleEmailChange}
 						disabled={isPending}
 						type="text"
-						id="login"
-						placeholder="Your login"
+						id="email"
+						placeholder="Your email"
 					/>
 				</InputContainer>
 				<InputContainer>

@@ -1,16 +1,16 @@
 import { ActionsAll, ActionTypes } from "./signin.actions";
-import { ISignInState, SignInStatusEnum } from "./../auth.contracts";
+import { SignInState, SignInStatusEnum } from "./../auth.contracts";
 
-const initialState: ISignInState = {
-	login: "",
+const initialState: SignInState = {
+	email: "",
 	password: "",
 	status: SignInStatusEnum.DRAFT,
 };
 
 export function signInReducer(
-	state: ISignInState = initialState,
+	state: SignInState = initialState,
 	action: ActionsAll
-): ISignInState {
+): SignInState {
 	switch (action.type) {
 		case ActionTypes.SIGN_IN:
 			return {
@@ -27,10 +27,10 @@ export function signInReducer(
 				...state,
 				status: SignInStatusEnum.FAIL,
 			};
-		case ActionTypes.CHANGE_LOGIN:
+		case ActionTypes.CHANGE_EMAIL:
 			return {
 				...state,
-				login: action.payload,
+				email: action.payload,
 			};
 		case ActionTypes.CHANGE_PASSWORD:
 			return {

@@ -1,7 +1,6 @@
 import { createAction, ActionsUnion } from "@cupcake/common";
 
 export const enum ActionTypes {
-	CHANGE_LOGIN = "[auth/signUp] Change login",
 	CHANGE_EMAIL = "[auth/signUp] Change email",
 	CHANGE_PASSWORD = "[auth/signUp] Change password",
 	CHANGE_PASSWORD_CONFIRM = "[auth/signUp] Change password confirm",
@@ -12,8 +11,6 @@ export const enum ActionTypes {
 }
 
 export const signUpActions = {
-	ChangeLogin: (login: string) =>
-		createAction(ActionTypes.CHANGE_LOGIN, login),
 	ChangeEmail: (email: string) =>
 		createAction(ActionTypes.CHANGE_EMAIL, email),
 	ChangePassword: (password: string) =>

@@ -1,8 +1,8 @@
-import { IAuthState } from "./../auth.contracts";
+import { AuthAwareState } from "./../auth.contracts";
 
-export const selectSignUpStatus = (state: IAuthState) => state.signUp.status;
-export const selectLogin = (state: IAuthState) => state.signUp.login;
-export const selectEmail = (state: IAuthState) => state.signUp.email;
-export const selectPassword = (state: IAuthState) => state.signUp.password;
-export const selectPasswordConfirm = (state: IAuthState) =>
+export const selectSignUpState = (state: AuthAwareState) => state.signUp;
+export const selectSignUpStatus = (state: AuthAwareState) => state.signUp.status;
+export const selectEmail = (state: AuthAwareState) => state.signUp.email;
+export const selectPassword = (state: AuthAwareState) => state.signUp.password;
+export const selectPasswordConfirm = (state: AuthAwareState) =>
 	state.signUp.passwordConfirm;

@@ -1,8 +1,7 @@
-import { ISignUpState, SignUpStatusEnum } from "./../auth.contracts";
+import { SignUpState, SignUpStatusEnum } from "./../auth.contracts";
 import { ActionsAll, ActionTypes } from "./signup.actions";
 
-const initialState: ISignUpState = {
-	login: "",
+const initialState: SignUpState = {
 	email: "",
 	password: "",
 	passwordConfirm: "",
@@ -10,9 +9,9 @@ const initialState: ISignUpState = {
 };
 
 export function signUpReducer(
-	state: ISignUpState = initialState,
+	state: SignUpState = initialState,
 	action: ActionsAll
-): ISignUpState {
+): SignUpState {
 	switch (action.type) {
 		case ActionTypes.SIGN_UP:
 			return {
@@ -28,11 +27,6 @@ export function signUpReducer(
 			return {
 				...state,
 				status: SignUpStatusEnum.FAIL,
-			};
-		case ActionTypes.CHANGE_LOGIN:
-			return {
-				...state,
-				login: action.payload,
 			};
 		case ActionTypes.CHANGE_EMAIL:
 			return {

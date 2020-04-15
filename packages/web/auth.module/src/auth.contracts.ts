@@ -1,27 +1,26 @@
-export interface IAuthState {
-	signIn: ISignInState;
-	signUp: ISignUpState;
+export interface AuthAwareState {
+	signIn: SignInState;
+	signUp: SignUpState;
 }
-export interface ISignUpState {
-    login: string;
+export interface SignUpState {
     email: string;
     password: string;
     passwordConfirm: string;
     status: SignUpStatusEnum;
 }
-export interface ISignInState {
-	login: string;
+export interface SignInState {
+	email: string;
 	password: string;
 	status: SignInStatusEnum;
 }
 
-export const enum SignInStatusEnum {
+export enum SignInStatusEnum {
 	DRAFT = "DRAFT",
 	PENDING = "PENDING",
 	SUCCESS = "SUCCESS",
 	FAIL = "FAIL",
 }
-export const enum SignUpStatusEnum {
+export enum SignUpStatusEnum {
 	DRAFT = "DRAFT",
 	PENDING = "PENDING",
 	SUCCESS = "SUCCESS",
