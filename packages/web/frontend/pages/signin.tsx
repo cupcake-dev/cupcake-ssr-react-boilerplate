@@ -25,7 +25,7 @@ import {
 import { isEmail, isNotEmpty } from '../helpers/validators';
 import Layout from '../components/layout/Layout';
 
-export interface SignInProps {}
+export  interface SignInProps {}
 
 const SignIn: React.FC<SignInProps> = () => {
   const [isPending, setIsPending] = useState(false);

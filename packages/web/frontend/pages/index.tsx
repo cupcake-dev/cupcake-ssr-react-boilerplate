@@ -22,15 +22,15 @@ const Home: NextPage<HomeProps> = () => {
       <PageContainer>
         <Main>
           <Title>Welcome to Cupcake Development boilerplate</Title>
-          <p>
-            Get started by editing this <code>pages/index.js</code>
-          </p>
+            <p>
+              Get started by editing this <code>pages/index.js</code>
+            </p>
 
-          <div>
-            Here should be the info about the usage, motivation, examples etc.
-          </div>
+            <div>
+              Here should be the info about the usage, motivation, examples etc.
+            </div>
         </Main>
-      </PageContainer>
+        </PageContainer>
     </Layout>
   );
 };

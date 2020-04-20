@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
       </Head>
 
       <Header userEmail={userEmail} />
-      {props.children}
+          {props.children}
 
       <style jsx global>{`
         html,
