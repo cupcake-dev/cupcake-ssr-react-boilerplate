@@ -11,7 +11,7 @@ export const enum ActionTypes {
 }
 
 export const signUpActions = {
-	ChangeEmail: (email: string) =>
+ChangeEmail: (email: string) =>
 		createAction(ActionTypes.CHANGE_EMAIL, email),
 	ChangePassword: (password: string) =>
 		createAction(ActionTypes.CHANGE_PASSWORD, password),

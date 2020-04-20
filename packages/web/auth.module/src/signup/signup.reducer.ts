@@ -14,10 +14,10 @@ export function signUpReducer(
 ): SignUpState {
 	switch (action.type) {
 		case ActionTypes.SIGN_UP:
-			return {
-				...state,
-				status: SignUpStatusEnum.PENDING,
-			};
+		  return {
+		  	  ...state,
+			  status: SignUpStatusEnum.PENDING,
+		  };
 		case ActionTypes.SIGN_UP_SUCCESS:
 			return {
 				...state,
