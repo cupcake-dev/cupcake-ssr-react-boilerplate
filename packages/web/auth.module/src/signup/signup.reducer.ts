@@ -18,7 +18,7 @@ export function signUpReducer(
 		  	  ...state,
 			  status: SignUpStatusEnum.PENDING,
 		  };
-		case ActionTypes.SIGN_UP_SUCCESS:
+	case ActionTypes.SIGN_UP_SUCCESS:
 			return {
 				...state,
 				status: SignUpStatusEnum.SUCCESS,

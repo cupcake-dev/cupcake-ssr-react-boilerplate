@@ -12,9 +12,9 @@
     }
   },
   "lint-staged": {
-    "*.{js, jsx, ts, tsx, json, css}": [
-      "eslint --fix",
-      "prettier --write"
+    "**/*.{js, jsx, ts, tsx, json, css}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "workspaces": {
