@@ -13,8 +13,9 @@
   },
   "lint-staged": {
     "*.{js, jsx, ts, tsx, json, css}": [
+      "eslint --fix",
       "prettier --write",
-      "eslint --fix"
+      "git add"
     ]
   },
   "workspaces": {
