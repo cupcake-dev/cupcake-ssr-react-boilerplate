@@ -4,7 +4,7 @@
   "scripts": {
     "lerna": "./node_modules/.bin/lerna",
     "start:dev": "yarn lerna run start:dev",
-    "lint:all:fix": "lerna run lint:fix"
+    "lint": "eslint --fix \"{,*/**/}*.{js,jsx,ts,tsx,json}\""
   },
   "husky": {
     "hooks": {
@@ -12,9 +12,9 @@
     }
   },
   "lint-staged": {
-    "packages/**/**/*.{js, jsx, ts, tsx, json, css}": [
+    "{,*/**/}*.{js,jsx,ts,tsx,json,css}": [
       "prettier --write",
-      "yarn lint:all:fix"
+      "eslint --fix"
     ]
   },
   "workspaces": {

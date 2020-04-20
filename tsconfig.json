@@ -1,17 +1,17 @@
 {
-	"compilerOptions": {
-		"target": "es5",
-		"module": "commonjs",
-		"strict": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"experimentalDecorators": true,
-		"declaration": true,
-		"declarationMap": true,
-		"sourceMap": true,
-		"skipLibCheck": true,
-		"jsx": "react"
-	},
-	"exclude": ["dist", "node_modules", ".nest"],
-	"include": ["src"]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "jsx": "react"
+  },
+  "exclude": ["dist", "node_modules", ".nest"],
+  "include": ["src"]
 }
