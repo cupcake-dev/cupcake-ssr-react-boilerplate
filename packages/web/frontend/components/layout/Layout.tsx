@@ -2,14 +2,14 @@ import Head from 'next/head';
 import * as React from 'react';
 import Header from '../header/Header';
 import { useSelector } from 'react-redux';
-import { selectAuthToken } from '@cupcake/auth-token.module';
+import { selectUserEmail } from '@cupcake/auth-token.module';
 
 export interface LayoutProps {
   children?: any;
 }
 
 const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
-  const authToken = useSelector(selectAuthToken);
+  const userEmail = useSelector(selectUserEmail);
 
   return (
     <>
@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header authToken={authToken} />
+      <Header userEmail={userEmail} />
       {props.children}
 
       <style jsx global>{`

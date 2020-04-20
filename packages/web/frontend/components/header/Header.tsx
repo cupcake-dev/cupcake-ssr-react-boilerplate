@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui';
 import styled from 'styled-components';
-import { AuthTokensInterface } from '@cupcake/common';
 import { useDispatch } from 'react-redux';
 import { authTokenActions } from '@cupcake/auth-token.module';
 
@@ -26,20 +25,20 @@ const NavBar = styled('div')`
 `;
 
 export interface HeaderProps {
-  authToken: AuthTokensInterface | null;
+  userEmail: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ authToken }: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({ userEmail }: HeaderProps) => {
   const dispatch = useDispatch();
 
   const handleLogout = useCallback(() => {
     dispatch(authTokenActions.RemoveToken());
   }, []);
 
-  if (authToken) {
+  if (userEmail) {
     return (
       <HeaderContainer>
-        <Status>You are logged in</Status>
+        <Status>You are logged in as: {userEmail}</Status>
         <NavBar>
           <Link href="/">
             <Button>Home</Button>
