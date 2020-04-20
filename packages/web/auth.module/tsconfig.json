@@ -1,20 +1,10 @@
 {
-  "compilerOptions": {            
-    "target": "es5",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true, 
-    "forceConsistentCasingInFileNames": true,  
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "rootDir": "./src",
-    "experimentalDecorators": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "jsx": "react"
-  },
-  "exclude": ["dist"],
-  "include": ["src"]
+	"extends": "../../../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"baseUrl": "./",
+		"rootDir": "./src",
+	},
+	"exclude": ["dist"],
+	"include": ["src"]
 }

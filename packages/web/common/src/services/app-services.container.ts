@@ -1,12 +1,12 @@
-import {ApiService} from "./api-service";
-import {AppServiceBaseInterface} from "./app-service-base.interface";
+import { ApiService } from './api-service';
+import { AppServiceBaseInterface } from './app-service-base.interface';
 
 interface AppConfig {
-  API_URL:string;
+  API_URL: string;
 }
 
 export class AppServicesContainer {
-  constructor(conf:AppConfig){
+  constructor(conf: AppConfig) {
     this.api = new ApiService(conf.API_URL);
   }
   private store!: any;
@@ -17,10 +17,9 @@ export class AppServicesContainer {
 
   public api!: ApiService;
 
-  private services: { [key: string]: AppServiceBaseInterface } = {}
+  private services: { [key: string]: AppServiceBaseInterface } = {};
 
   public getService<T>(name: string): T {
-    return this.services[name] as any as T;
+    return (this.services[name] as any) as T;
   }
 }
-

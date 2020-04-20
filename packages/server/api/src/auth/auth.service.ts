@@ -3,7 +3,7 @@ import { UserInterface, AuthTokensInterface } from '@cupcake/common';
 import { UsersService } from './../users/users.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { checkPassword } from "../common/utils/crypto.utils";
+import { checkPassword } from '../common/utils/crypto.utils';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   async signUp(createUserDto: CreateUserDto): Promise<AuthTokensInterface> {
-    const user = await this.usersService.createUser(createUserDto); 
+    const user = await this.usersService.createUser(createUserDto);
     return await this.signIn(user);
-  } // add sessions
+  }
 }

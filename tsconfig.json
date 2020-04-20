@@ -11,5 +11,7 @@
 		"sourceMap": true,
 		"skipLibCheck": true,
 		"jsx": "react"
-	}
+	},
+	"exclude": ["dist", "node_modules", ".nest"],
+	"include": ["src"]
 }
