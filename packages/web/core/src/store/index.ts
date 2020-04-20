@@ -1,1 +1,6 @@
-export { withDefaultReduxModules, withReduxDynamicModules } from "./makeStore";
+export {
+	withDefaultReduxModules,
+	withReduxDynamicModules,
+	SagaStore,
+	wrapper,
+} from "./makeStore";

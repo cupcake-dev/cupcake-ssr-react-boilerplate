@@ -1,204 +1,79 @@
-import Head from 'next/head'
 import * as React from "react";
+import axios from "axios";
+import { PageContainer, Button } from "../components/ui";
+import styled from "styled-components";
+import Layout from "../components/layout/Layout";
+import { wrapper } from "@cupcake/webcore";
+import { authTokenActions } from "@cupcake/auth-token.module";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUserEmail } from "@cupcake/auth-token.module/dist/auth-token.selectors";
+import { NextPage } from "next";
 
-const Home: React.FC<any> = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const Title = styled("h1")`
+	font-size: 56px;
+`;
+const Main = styled("main")`
+	margin: 60px 0;
+	text-align: center;
+	font-size: 20px;
+`;
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+export interface HomeProps {
+  email: string;
+}
 
-      <p className="description">
-        Get started by editing this <code>pages/index.js</code>
-      </p>
+const Home: NextPage<HomeProps> = (props) => {
+	const userEmail = useSelector(selectUserEmail);
+	const dispatch = useDispatch();
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+	const handleFetchUserEmail = () => {
+		dispatch(authTokenActions.GetUserEmail())
+	}
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
+	return (
+		<Layout>
+			<PageContainer>
+				<Main>
+					<Title>Welcome to Cupcake Development boilerplate</Title>
 
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
+					<p>
+						Your email: {props.email}
+					</p>
+					<p>
+						Get started by editing this <code>pages/index.js</code>
+					</p>
 
-        <a
-          href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
+					<div>
+						Here should be the info about the usage, motivation,
+						examples etc.
+					</div>
+					<Button onClick={handleFetchUserEmail}>Fetch User Email</Button>
+					<p>{userEmail}</p>
+				</Main>
+			</PageContainer>
+		</Layout>
+	);
+};
 
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
+Home.getInitialProps = async ({store, pathname, req, res}) => {
 
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
 
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+	await store.dispatch(authTokenActions.GetUserEmail())
+	const userEmail = store.getState().authToken.userEmail
+	console.log(userEmail);
+	// const instance = axios.create({
+	// 	baseURL: "http://localhost:8000",
+	// 	timeout: 1000,
+	// 	headers: {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1lQG1haWwucnUiLCJzdWIiOiIzNzlmZTQ5OC02OGQwLTQ4MmEtYTk0ZC1mYjVmZTE2NGJmM2EiLCJpYXQiOjE1ODcxMTYyMTUsImV4cCI6MTU4NzExOTgxNX0.T4fCv7ZyZqSuprhwz6NHRhY37TJWn9WipF3nFzF4xUw"}
+	// });
+	// const data = await instance.get("/auth/profile").then(response => {
+	// 	return response.data.email
+	// })
+	
 
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+	return {
+		email: userEmail
+	}
+};
 
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+export default Home;

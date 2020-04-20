@@ -1,4 +1,10 @@
-import React, { useState, FormEvent, ChangeEvent, useCallback, useEffect } from "react";
+import React, {
+	useState,
+	FormEvent,
+	ChangeEvent,
+	useCallback,
+	useEffect,
+} from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { withReduxDynamicModules } from "@cupcake/webcore";
@@ -16,6 +22,8 @@ import {
 	InputText,
 	Button,
 } from "../components/ui";
+import { isEmail, isNotEmpty } from "../helpers/validators";
+import Layout from "../components/layout/Layout";
 
 export interface SignInProps {}
 
@@ -29,11 +37,21 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
 	const router = useRouter();
 
 	// TODO useCallback and main logic
-	const handleSignInSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setIsPending(true);
-		dispatch(signInActions.SignIn());
-	}, []);
+	const handleSignInSubmit = useCallback(
+		(e: FormEvent<HTMLFormElement>) => {
+			e.preventDefault();
+			setIsPending(true);
+			if (isEmail(email) && isNotEmpty(password)) {
+				dispatch(signInActions.SignIn());
+			} else {
+				alert(
+					"Please check if your email or password is spelled correctly"
+				);
+				setIsPending(false);
+			}
+		},
+		[email, password]
+	);
 
 	const handleEmailChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
@@ -52,45 +70,46 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
 
 	useEffect(() => {
 		if (status === SignInStatusEnum.SUCCESS) {
-			router.replace("/profile", "profile").then(() => {
-				setIsPending(false);
-			});
+			setIsPending(false);
+			router.replace("/");
 		} else if (status === SignInStatusEnum.FAIL) {
 			setIsPending(false);
-			alert('Something goes wrong')
+			alert("Something goes wrong");
 		}
-	}, [status]); // TODO: Possible memory leak
+	}, [status]);
 
 	return (
-		<PageContainer>
-			<Form onSubmit={handleSignInSubmit}>
-				<InputContainer>
-					<Label htmlFor="email">Email</Label>
-					<InputText
-						value={email}
-						onChange={handleEmailChange}
-						disabled={isPending}
-						type="text"
-						id="email"
-						placeholder="Your email"
-					/>
-				</InputContainer>
-				<InputContainer>
-					<Label htmlFor="password">Password</Label>
-					<InputText
-						value={password}
-						onChange={handlePaswordChange}
-						disabled={isPending}
-						type="password"
-						id="password"
-						placeholder="Your password"
-					/>
-				</InputContainer>
-				<Button type="submit" disabled={isPending}>
-					Sign In
-				</Button>
-			</Form>
-		</PageContainer>
+		<Layout>
+			<PageContainer>
+				<Form onSubmit={handleSignInSubmit}>
+					<InputContainer>
+						<Label htmlFor="email">Email</Label>
+						<InputText
+							value={email}
+							onChange={handleEmailChange}
+							disabled={isPending}
+							type="text"
+							id="email"
+							placeholder="Your email"
+						/>
+					</InputContainer>
+					<InputContainer>
+						<Label htmlFor="password">Password</Label>
+						<InputText
+							value={password}
+							onChange={handlePaswordChange}
+							disabled={isPending}
+							type="password"
+							id="password"
+							placeholder="Your password"
+						/>
+					</InputContainer>
+					<Button type="submit" disabled={isPending}>
+						Sign In
+					</Button>
+				</Form>
+			</PageContainer>
+		</Layout>
 	);
 };
 

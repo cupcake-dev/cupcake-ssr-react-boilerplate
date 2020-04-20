@@ -6,7 +6,8 @@
   "private": false,
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "start:dev": "tsc --watch -p tsconfig.json"
   },
   "devDependencies": {
     "typescript": "^3.8.3"

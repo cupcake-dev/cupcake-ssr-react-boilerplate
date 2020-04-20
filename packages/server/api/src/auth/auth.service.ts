@@ -15,7 +15,7 @@ export class AuthService {
   async validateUser(
     email: string,
     pass: string,
-  ): Promise<any> {
+  ): Promise<Omit<UserInterface, 'password'>> {
     const user = await this.usersService.findOneByEmail(email);
     if (user && checkPassword(user.password, pass)) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   async signUp(createUserDto: CreateUserDto): Promise<AuthTokensInterface> {
-    const user = await this.usersService.createUser(createUserDto);
+    const user = await this.usersService.createUser(createUserDto); 
     return await this.signIn(user);
   } // add sessions
 }

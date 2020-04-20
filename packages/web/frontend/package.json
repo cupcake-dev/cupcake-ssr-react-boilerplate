@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
-    "start:dev": "next dev",
+    "start:dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
     "build": "next build",
     "start": "next start"
   },
@@ -12,7 +11,7 @@
     "@types/react-redux": "^7.1.7",
     "express": "^4.17.1",
     "next": "9.3.4",
-    "next-redux-wrapper": "^5.0.0",
+    "next-redux-wrapper": "6.0.0-rc.6",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-redux": "^7.2.0",

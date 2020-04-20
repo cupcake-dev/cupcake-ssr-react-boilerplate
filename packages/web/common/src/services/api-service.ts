@@ -47,9 +47,7 @@ export class ApiService implements AppServiceBaseInterface {
 		data?: any,
 		config?: AxiosRequestConfig
 	): AxiosPromise<T> {
-		console.log("post");
 		const _config = this.setAuthHeader(config);
-		console.log("post 2", _config);
 		return this.instance.post(url, data, _config);
 	}
 	put<T = any>(
