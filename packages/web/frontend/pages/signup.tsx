@@ -4,16 +4,16 @@ import React, {
   ChangeEvent,
   useCallback,
   useEffect,
-} from "react";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
-import { withReduxDynamicModules } from "@cupcake/webcore";
+} from 'react';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { withReduxDynamicModules } from '@cupcake/webcore';
 import {
   getAuthModule,
   signUpSelectors,
   signUpActions,
   SignUpStatusEnum,
-} from "@cupcake/auth.module";
+} from '@cupcake/auth.module';
 import {
   PageContainer,
   Form,
@@ -21,9 +21,9 @@ import {
   Label,
   InputText,
   Button,
-} from "../components/ui";
-import { isEmail, isNotEmpty, isPasswordsMatch } from "../helpers/validators";
-import Layout from "../components/layout/Layout";
+} from '../components/ui';
+import { isEmail, isNotEmpty, isPasswordsMatch } from '../helpers/validators';
+import Layout from '../components/layout/Layout';
 
 export interface SignUpProps {}
 
@@ -34,7 +34,7 @@ const SignUp: React.FC<SignUpProps> = () => {
   const email: string = useSelector(signUpSelectors.selectEmail);
   const password: string = useSelector(signUpSelectors.selectPassword);
   const passwordConfirm: string = useSelector(
-    signUpSelectors.selectPasswordConfirm
+    signUpSelectors.selectPasswordConfirm,
   );
   const dispatch = useDispatch();
   const router = useRouter();
@@ -51,17 +51,17 @@ const SignUp: React.FC<SignUpProps> = () => {
       ) {
         dispatch(signUpActions.SignUp());
       } else if (!isEmail(email)) {
-        alert("Is email address correct?");
+        alert('Is email address correct?');
         setIsPending(false);
       } else if (!isPasswordsMatch(password, passwordConfirm)) {
         alert("Passwords don't match.");
         setIsPending(false);
       } else {
-        alert("All inputs should be filled.");
+        alert('All inputs should be filled.');
         setIsPending(false);
       }
     },
-    [email, password, passwordConfirm]
+    [email, password, passwordConfirm],
   );
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -73,23 +73,23 @@ const SignUp: React.FC<SignUpProps> = () => {
       // dispatch an action to change Password in state...
       dispatch(signUpActions.ChangePassword(e.target.value));
     },
-    []
+    [],
   );
   const handlePasswordConfirmChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       // dispatch an action to change PasswordConfirm in state...
       dispatch(signUpActions.ChangePasswordConfirm(e.target.value));
     },
-    []
+    [],
   );
 
   useEffect(() => {
     if (status === SignUpStatusEnum.SUCCESS) {
       setIsPending(false);
-      router.replace("/");
+      router.replace('/');
     } else if (status === SignUpStatusEnum.FAIL) {
       setIsPending(false);
-      alert("Something goes wrong");
+      alert('Something goes wrong');
     }
   }, [status]);
 

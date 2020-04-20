@@ -1,8 +1,8 @@
-import Head from "next/head";
-import * as React from "react";
-import Header from "../header/Header";
-import { useSelector } from "react-redux";
-import { selectAuthToken } from "@cupcake/auth-token.module";
+import Head from 'next/head';
+import * as React from 'react';
+import Header from '../header/Header';
+import { useSelector } from 'react-redux';
+import { selectAuthToken } from '@cupcake/auth-token.module';
 
 export interface LayoutProps {
   children?: any;

@@ -1,7 +1,7 @@
-export { ActionsUnion, createAction } from "./helpers/createAction.helper";
+export { ActionsUnion, createAction } from './helpers/createAction.helper';
 
-export * from "./contarcts";
+export * from './contarcts';
 
-export { AppServicesContainer } from "./services/app-services.container";
+export { AppServicesContainer } from './services/app-services.container';
 
-export { ApiService } from "./services/api-service";
+export { ApiService } from './services/api-service';

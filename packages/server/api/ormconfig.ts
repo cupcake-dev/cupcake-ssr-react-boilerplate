@@ -1,6 +1,6 @@
-import {ConnectionOptions} from 'typeorm';
+import { ConnectionOptions } from 'typeorm';
 
-const config: ConnectionOptions =  {
+const config: ConnectionOptions = {
   type: 'sqlite',
   database: 'database.db',
   synchronize: false,
@@ -11,6 +11,6 @@ const config: ConnectionOptions =  {
   cli: {
     migrationsDir: '/src/migrations',
   },
-}
+};
 
 export = config;

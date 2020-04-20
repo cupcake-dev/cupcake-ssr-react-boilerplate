@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as ormconfig from '../ormconfig'
+import * as ormconfig from '../ormconfig';
 
 @Module({
   imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule],

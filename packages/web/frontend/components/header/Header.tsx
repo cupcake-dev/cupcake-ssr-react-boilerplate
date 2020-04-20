@@ -1,22 +1,22 @@
-import React, { useCallback } from "react";
-import Link from "next/link";
-import { Button } from "../ui";
-import styled from "styled-components";
-import { AuthTokensInterface } from "@cupcake/common";
-import { useDispatch } from "react-redux";
-import { authTokenActions } from "@cupcake/auth-token.module";
+import React, { useCallback } from 'react';
+import Link from 'next/link';
+import { Button } from '../ui';
+import styled from 'styled-components';
+import { AuthTokensInterface } from '@cupcake/common';
+import { useDispatch } from 'react-redux';
+import { authTokenActions } from '@cupcake/auth-token.module';
 
-const HeaderContainer = styled("header")`
+const HeaderContainer = styled('header')`
   background-color: #0089d2;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
-const Status = styled("h2")`
+const Status = styled('h2')`
   margin-left: 30px;
   color: #fff;
 `;
-const NavBar = styled("div")`
+const NavBar = styled('div')`
   display: flex;
 
   button {

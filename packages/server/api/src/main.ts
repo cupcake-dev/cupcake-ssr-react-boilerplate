@@ -9,7 +9,9 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('Cupcake API')
-    .setDescription('Boilerplate API for creating web apps with React/Redux and SSR')
+    .setDescription(
+      'Boilerplate API for creating web apps with React/Redux and SSR',
+    )
     .setVersion('1.0')
     .addTag('API')
     .build();

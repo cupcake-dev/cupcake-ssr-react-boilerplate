@@ -1,8 +1,8 @@
-import React from "react";
-import App, { AppContext, AppInitialProps } from "next/app";
-import { END } from "redux-saga";
+import React from 'react';
+import App, { AppContext, AppInitialProps } from 'next/app';
+import { END } from 'redux-saga';
 
-import { withDefaultReduxModules, SagaStore } from "@cupcake/webcore";
+import { withDefaultReduxModules, SagaStore } from '@cupcake/webcore';
 
 class WrappedApp extends App<AppInitialProps> {
   static async getInitialProps({ Component, ctx }: AppContext) {

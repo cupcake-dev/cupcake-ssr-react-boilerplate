@@ -1,10 +1,10 @@
-import { AuthTokensInterface } from "@cupcake/common";
+import { AuthTokensInterface } from '@cupcake/common';
 
 export interface AuthTokenAwareState {
-	authToken: AuthTokenState;
+  authToken: AuthTokenState;
 }
 
 export type AuthTokenState = {
-	token: AuthTokensInterface | null;
-	userEmail: string;
+  token: AuthTokensInterface | null;
+  userEmail: string;
 };

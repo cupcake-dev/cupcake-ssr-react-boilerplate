@@ -1,7 +1,7 @@
 import { UserInterface } from '@cupcake/common';
 import { User } from './entity/user.entity';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import {hashPassword} from "../common/utils/crypto.utils";
+import { hashPassword } from '../common/utils/crypto.utils';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -12,7 +12,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async createUser(user: Omit<UserInterface, "id">) {
+  async createUser(user: Omit<UserInterface, 'id'>) {
     const _user = new User();
     const isUserExist = await this.findOneByEmail(user.email);
     // check if user does already exist
@@ -21,7 +21,7 @@ export class UsersService {
       _user.password = hashPassword(user.password);
       return this.usersRepository.save(_user);
     } else {
-      throw new BadRequestException("This Email address is already used");
+      throw new BadRequestException('This Email address is already used');
     }
   }
 

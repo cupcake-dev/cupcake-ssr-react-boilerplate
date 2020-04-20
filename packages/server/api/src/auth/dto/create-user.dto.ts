@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
-import { UserInterface } from '@cupcake/common'
+import { UserInterface } from '@cupcake/common';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateUserDto implements Omit<UserInterface, "id"> {
+export class CreateUserDto implements Omit<UserInterface, 'id'> {
   @ApiProperty()
   @IsString()
   @IsEmail()
