@@ -1,7 +1,6 @@
 import React from 'react';
 import { Store } from 'redux';
 import { Task } from 'redux-saga';
-import { all } from 'redux-saga/effects';
 import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
 import {
   createStore,
@@ -12,16 +11,12 @@ import { getSagaExtension, ISagaModule } from 'redux-dynamic-modules-saga';
 import {
   getAuthTokenModule,
   selectAuthToken,
-  GetUserEmailSaga,
 } from '@cupcake/auth-token.module';
 import { AppServicesContainer } from '@cupcake/common';
+import rootSaga from './rootSaga';
 
 export interface SagaStore extends Store {
   sagaTask?: Task;
-}
-
-function* rootSaga() {
-  yield all([GetUserEmailSaga]);
 }
 
 export const makeStore: MakeStore = (context: Context) => {
@@ -48,6 +43,7 @@ export const makeStore: MakeStore = (context: Context) => {
 
   return store;
 };
+export const wrapper = createWrapper(makeStore, { debug: true });
 
 export function withReduxDynamicModules(
   PageComponent: any,
@@ -62,8 +58,6 @@ export function withReduxDynamicModules(
   };
   return WithReduxDynamicModules;
 }
-
-export const wrapper = createWrapper(makeStore, { debug: true });
 
 export function withDefaultReduxModules(MyApp: any) {
   return wrapper.withRedux(MyApp);

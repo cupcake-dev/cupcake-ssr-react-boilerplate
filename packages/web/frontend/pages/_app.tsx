@@ -1,9 +1,16 @@
 import React from 'react';
 import App, { AppContext, AppInitialProps } from 'next/app';
 import { END } from 'redux-saga';
+import { SagaStore, withDefaultReduxModules } from '@cupcake/webcore';
 
-import { withDefaultReduxModules, SagaStore } from '@cupcake/webcore';
+// If we define our App like this it dispatches saga but hydrates state wrong
+// const WrappedApp = (props: any) => {
+//   const { Component, pageProps } = props;
+//   return <Component {...pageProps} />;
+// };
 
+// If we make getServerSideProps it doesn't dispatch saga
+// It works correct with getInitialProps
 class WrappedApp extends App<AppInitialProps> {
   static async getInitialProps({ Component, ctx }: AppContext) {
     const pageProps = {
@@ -13,6 +20,7 @@ class WrappedApp extends App<AppInitialProps> {
     };
 
     if (ctx.req) {
+      console.log('Saga is executing on server, we will wait');
       ctx.store.dispatch(END);
       await (ctx.store as SagaStore).sagaTask.toPromise();
     }
