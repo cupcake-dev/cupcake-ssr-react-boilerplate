@@ -8,15 +8,12 @@ function* handleGetUserEmail() {
   try {
     console.log('saga start');
     // Uncoment this when you want the real functionality
-    // const api: ApiService = yield getContext('api');
-    // const userDataResponse: AxiosResponse<any> = yield call(
-    //   [api, 'get'],
-    //   'auth/profile',
-    // );
-    // yield put(authTokenActions.SetUserEmail(userDataResponse.data.email));
-    // console.log('saga end');
-    const randNum = Math.random();
-    yield put(authTokenActions.SetUserEmail(randNum.toString()));
+    const api: ApiService = yield getContext('api');
+    const userDataResponse: AxiosResponse<any> = yield call(
+      [api, 'get'],
+      'auth/profile',
+    );
+    yield put(authTokenActions.SetUserEmail(userDataResponse.data.email));
     console.log('saga end');
   } catch (e) {
     console.log('saga error');

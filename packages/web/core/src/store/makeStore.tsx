@@ -11,8 +11,11 @@ import { getSagaExtension, ISagaModule } from 'redux-dynamic-modules-saga';
 import {
   getAuthTokenModule,
   selectAuthToken,
+  authTokenActions,
 } from '@cupcake/auth-token.module';
 import { AppServicesContainer } from '@cupcake/common';
+import axios, { AxiosResponse } from 'axios';
+import { AuthTokensInterface } from '@cupcake/common';
 import rootSaga from './rootSaga';
 
 export interface SagaStore extends Store {
@@ -45,6 +48,42 @@ export const makeStore: MakeStore = (context: Context) => {
 };
 export const wrapper = createWrapper(makeStore, { debug: true });
 
+// export function WithAuthTokens(PageComponent: any) {
+//   const WithAuthTokens = (props: any) => {
+//     return <PageComponent {...props} />;
+//   };
+
+//   if (PageComponent.getInitialProps) {
+//     WithAuthTokens.getInitalProps = async ({ PageComponent, ctx }: any) => {
+//       if (ctx.req) {
+//         // Try to refresh access token, and if sccessful dispatch it to store
+//         // const cookies = parseCookies(ctx);
+//         const response: AxiosResponse<AuthTokensInterface> = await axios({
+//           method: 'post',
+//           baseURL: 'http://localhost:3000/api',
+//           url: 'auth/refresh_token',
+//           withCredentials: true,
+//           timeout: 5000,
+//           headers: { cookie: ctx.req.headers.cookie },
+//         });
+
+//         console.log(response.data.accessToken);
+//         if (response.data.accessToken) {
+//           ctx.store.dispatch(authTokenActions.SetToken(response.data));
+//         }
+//       }
+
+//       return await PageComponent.getInitialProps(ctx);
+//     };
+//   }
+
+//   return WithAuthTokens;
+// }
+
+export function withDefaultReduxModules(MyApp: any) {
+  return wrapper.withRedux(MyApp);
+}
+
 export function withReduxDynamicModules(
   PageComponent: any,
   modules: ISagaModule<any>[],
@@ -57,8 +96,4 @@ export function withReduxDynamicModules(
     );
   };
   return WithReduxDynamicModules;
-}
-
-export function withDefaultReduxModules(MyApp: any) {
-  return wrapper.withRedux(MyApp);
 }

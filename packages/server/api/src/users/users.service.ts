@@ -29,6 +29,13 @@ export class UsersService {
     return await this.usersRepository.findOne({ where: { email } });
   }
   async findOneById(id: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { id } });
+    return await this.usersRepository.findOne({ where: { id } });
+  }
+  async incrementTokenVersion(userId: string) {
+    return await this.usersRepository.increment(
+      { id: userId },
+      'tokenVersion',
+      1,
+    );
   }
 }

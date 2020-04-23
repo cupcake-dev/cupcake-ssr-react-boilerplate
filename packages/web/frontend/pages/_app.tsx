@@ -2,6 +2,10 @@ import React from 'react';
 import App, { AppContext, AppInitialProps } from 'next/app';
 import { END } from 'redux-saga';
 import { SagaStore, withDefaultReduxModules } from '@cupcake/webcore';
+import { parseCookies } from 'nookies';
+import axios, { AxiosResponse } from 'axios';
+import { AuthTokensInterface } from '@cupcake/common';
+import { authTokenActions } from '@cupcake/auth-token.module';
 
 // If we define our App like this it dispatches saga but hydrates state wrong
 // const WrappedApp = (props: any) => {
@@ -20,6 +24,7 @@ class WrappedApp extends App<AppInitialProps> {
     };
 
     if (ctx.req) {
+      // Run sagas
       console.log('Saga is executing on server, we will wait');
       ctx.store.dispatch(END);
       await (ctx.store as SagaStore).sagaTask.toPromise();
