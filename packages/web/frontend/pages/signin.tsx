@@ -7,17 +7,14 @@ import React, {
 } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  withReduxDynamicModules,
-  withDefaultReduxModules,
-  wrapper,
-} from '@cupcake/webcore';
+import { withReduxDynamicModules } from '@cupcake/webcore';
 import {
   getAuthModule,
   signInSelectors,
   signInActions,
   SignInStatusEnum,
 } from '@cupcake/auth.module';
+
 import {
   PageContainer,
   Form,
@@ -111,8 +108,5 @@ const SignIn: React.FC<SignInProps> = () => {
     </Layout>
   );
 };
-
-// It gives an error that ReduxContext doesn't exist
-// const WrappedSignIn = wrapper.withRedux(SignIn);
 
 export default withReduxDynamicModules(SignIn, [getAuthModule()]);

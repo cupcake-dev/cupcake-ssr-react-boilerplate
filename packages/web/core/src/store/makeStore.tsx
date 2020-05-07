@@ -1,12 +1,6 @@
 import React from 'react';
-import { Store } from 'redux';
-import { Task } from 'redux-saga';
 import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
-import {
-  createStore,
-  IModuleStore,
-  DynamicModuleLoader,
-} from 'redux-dynamic-modules';
+import { createStore, IModuleStore } from 'redux-dynamic-modules';
 import { getSagaExtension, ISagaModule } from 'redux-dynamic-modules-saga';
 import {
   getAuthTokenModule,
@@ -14,86 +8,65 @@ import {
   authTokenActions,
 } from '@cupcake/auth-token.module';
 import { AppServicesContainer } from '@cupcake/common';
-import axios, { AxiosResponse } from 'axios';
-import { AuthTokensInterface } from '@cupcake/common';
-import rootSaga from './rootSaga';
+import axios from 'axios';
 
-export interface SagaStore extends Store {
-  sagaTask?: Task;
-}
+import { useStore } from 'react-redux';
 
-export const makeStore: MakeStore = (context: Context) => {
+export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
+  modules,
+) => (context: Context) => {
   const appServicesContainer = new AppServicesContainer({
     API_URL: 'http://localhost:3000/api/', // TODO: need to get from env
   });
   const sagaExtension = getSagaExtension<AppServicesContainer>(
     appServicesContainer,
   );
+  // @ts-ignore
 
   const store: IModuleStore<any> = createStore(
     {
       extensions: [sagaExtension],
     },
     getAuthTokenModule(), // Module that stores JWT Token
-    /*put default modules here*/
+    ...modules,
   );
-
-  (store as SagaStore).sagaTask = sagaExtension.middleware![0].run(rootSaga);
-
-  appServicesContainer.api.setGetAuthTokensHandler(() => {
-    return selectAuthToken(store.getState());
-  });
 
   return store;
 };
-export const wrapper = createWrapper(makeStore, { debug: true });
-
-// export function WithAuthTokens(PageComponent: any) {
-//   const WithAuthTokens = (props: any) => {
-//     return <PageComponent {...props} />;
-//   };
-
-//   if (PageComponent.getInitialProps) {
-//     WithAuthTokens.getInitalProps = async ({ PageComponent, ctx }: any) => {
-//       if (ctx.req) {
-//         // Try to refresh access token, and if sccessful dispatch it to store
-//         // const cookies = parseCookies(ctx);
-//         const response: AxiosResponse<AuthTokensInterface> = await axios({
-//           method: 'post',
-//           baseURL: 'http://localhost:3000/api',
-//           url: 'auth/refresh_token',
-//           withCredentials: true,
-//           timeout: 5000,
-//           headers: { cookie: ctx.req.headers.cookie },
-//         });
-
-//         console.log(response.data.accessToken);
-//         if (response.data.accessToken) {
-//           ctx.store.dispatch(authTokenActions.SetToken(response.data));
-//         }
-//       }
-
-//       return await PageComponent.getInitialProps(ctx);
-//     };
-//   }
-
-//   return WithAuthTokens;
-// }
-
-export function withDefaultReduxModules(MyApp: any) {
-  return wrapper.withRedux(MyApp);
-}
 
 export function withReduxDynamicModules(
   PageComponent: any,
   modules: ISagaModule<any>[],
 ) {
+  const wrapper = createWrapper(makeStoreFactory(modules), { debug: true });
+
   const WithReduxDynamicModules = (props: any) => {
-    return (
-      <DynamicModuleLoader modules={modules}>
-        <PageComponent {...props} />
-      </DynamicModuleLoader>
-    );
+    const store: IModuleStore<any> = useStore() as IModuleStore<any>;
+    store.addModules(modules);
+    return <PageComponent {...props} />;
   };
-  return WithReduxDynamicModules;
+
+  WithReduxDynamicModules.getInitialProps = async (context: any) => {
+    const { store } = context;
+    store.addModules(modules);
+    if (context.req) {
+      try {
+        const tokens = await axios.post(
+          'http://localhost:3000/api/auth/refresh_token',
+        );
+        //console.log('tokens', tokens);
+        store.dispatch({
+          type: '[auth-token] Set token',
+          payload: 'server token',
+        });
+      } catch (e) {
+        console.log('tokens not getted', e);
+      }
+    }
+
+    return PageComponent.getInitialProps
+      ? await PageComponent.getInitialProps(context)
+      : undefined;
+  };
+  return wrapper.withRedux(WithReduxDynamicModules);
 }
