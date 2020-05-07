@@ -109,4 +109,4 @@ const SignIn: React.FC<SignInProps> = () => {
   );
 };
 
-export default withReduxDynamicModules(SignIn, [getAuthModule()]);
+export default withReduxDynamicModules(SignIn, []);

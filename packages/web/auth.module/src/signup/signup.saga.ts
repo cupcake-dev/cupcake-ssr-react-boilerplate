@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { authTokenActions } from '@cupcake/auth-token.module';
+import { authTokensActions } from './../authTokens/auth-tokens.actions';
 import { selectSignUpState } from './signup.selectors';
 import { SignUpState } from './../auth.contracts';
 import { getContext, select, call, put, takeLatest } from 'redux-saga/effects';
@@ -17,7 +17,7 @@ function* handleSignUp(action: ReturnType<typeof signUpActions.SignUp>) {
       'auth/signUp',
       dto,
     );
-    yield put(authTokenActions.SetToken(tokensResponse.data));
+    yield put(authTokensActions.SetToken(tokensResponse.data));
     yield put(signUpActions.SignUpSuccess());
   } catch (e) {
     yield put(signUpActions.SignUpFailure());

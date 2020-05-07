@@ -2,11 +2,7 @@ import React from 'react';
 import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
 import { createStore, IModuleStore } from 'redux-dynamic-modules';
 import { getSagaExtension, ISagaModule } from 'redux-dynamic-modules-saga';
-import {
-  getAuthTokenModule,
-  selectAuthToken,
-  authTokenActions,
-} from '@cupcake/auth-token.module';
+import { getAuthModule, authTokensActions } from '@cupcake/auth.module';
 import { AppServicesContainer } from '@cupcake/common';
 import axios from 'axios';
 
@@ -27,7 +23,7 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
     {
       extensions: [sagaExtension],
     },
-    getAuthTokenModule(), // Module that stores JWT Token
+    getAuthModule(), // Module that stores JWT Token
     ...modules,
   );
 
@@ -54,7 +50,7 @@ export function withReduxDynamicModules(
         const tokens = await axios.post(
           'http://localhost:3000/api/auth/refresh_token',
         );
-        //console.log('tokens', tokens);
+        console.log('tokens', tokens);
         store.dispatch({
           type: '[auth-token] Set token',
           payload: 'server token',
