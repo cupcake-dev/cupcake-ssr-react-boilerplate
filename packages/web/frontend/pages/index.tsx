@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 import { NextPage } from 'next';
 import { withReduxDynamicModules } from '@cupcake/webcore';
-import { getProfileModule } from '@cupcake/profile.module';
+import { getProfileModule, profileActions } from '@cupcake/profile.module';
 
 const Title = styled('h1')`
   font-size: 56px;
@@ -34,6 +34,10 @@ const Home: NextPage<HomeProps> = () => {
       </PageContainer>
     </Layout>
   );
+};
+
+Home.getInitialProps = async ({ store }) => {
+  store.dispatch(profileActions.GetUserProfile());
 };
 
 export default withReduxDynamicModules(Home, [getProfileModule()]);

@@ -15,7 +15,7 @@ export function authTokensReducer(
       if (!action.payload) {
         return state;
       }
-      return { ...state, ...action.payload.authToken };
+      return { ...state, ...action.payload.authTokens };
     case ActionTypes.SET_TOKEN:
       return { ...state, token: action.payload };
     case ActionTypes.REMOVE_TOKEN:

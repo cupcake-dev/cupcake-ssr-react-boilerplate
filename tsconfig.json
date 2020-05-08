@@ -10,7 +10,13 @@
     "declarationMap": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./packages",
+    "paths": {
+      "@cupcake/profile.module": ["web/profile.module/src"],
+      "@cupcake/auth.module": ["web/auth.module/src"],
+      "@cupcake/webcore": ["web/core/src"]
+    }
   },
   "exclude": ["dist", "node_modules", ".nest"],
   "include": ["src"]

@@ -2,7 +2,12 @@ import React from 'react';
 import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
 import { createStore, IModuleStore } from 'redux-dynamic-modules';
 import { getSagaExtension, ISagaModule } from 'redux-dynamic-modules-saga';
-import { getAuthModule, authTokensActions } from '@cupcake/auth.module';
+import {
+  getAuthModule,
+  authTokensActions,
+  AuthAwareState,
+} from '@cupcake/auth.module';
+import { END } from 'redux-saga';
 import { AppServicesContainer } from '@cupcake/common';
 import axios from 'axios';
 
@@ -12,7 +17,10 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
   modules,
 ) => (context: Context) => {
   const appServicesContainer = new AppServicesContainer({
-    API_URL: 'http://localhost:3000/api/', // TODO: need to get from env
+    API_URL:
+      typeof window === 'undefined'
+        ? 'http://localhost:8000'
+        : 'http://localhost:3000/api/', // TODO: need to get from env
   });
   const sagaExtension = getSagaExtension<AppServicesContainer>(
     appServicesContainer,
@@ -25,6 +33,18 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
     getAuthModule(), // Module that stores JWT Token
     ...modules,
   );
+
+  // @ts-ignore
+  store.sagaTasks = sagaExtension.tasks;
+
+  appServicesContainer.setStore(store);
+  appServicesContainer.api.setGetAuthTokensHandler(() => {
+    return {
+      // @ts-ignore
+      accessToken: (store.getState() as AuthAwareState).authTokens
+        .token as string,
+    };
+  });
 
   return store;
 };
@@ -64,10 +84,20 @@ export function withReduxDynamicModules(
         });
       }
     }
+    let pageProps = {};
+    if (PageComponent.getInitialProps) {
+      pageProps = await PageComponent.getInitialProps(context);
+    }
 
-    return PageComponent.getInitialProps
-      ? await PageComponent.getInitialProps(context)
-      : undefined;
+    // Stop saga on the server
+    if (req) {
+      store.dispatch(END);
+      const { sagaTasks } = store;
+      await Promise.all(
+        sagaTasks.keys.map((key: any) => sagaTasks.get(key).toPromise()),
+      );
+    }
+    return pageProps;
   };
   return wrapper.withRedux(WithReduxDynamicModules);
 }
