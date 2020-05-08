@@ -2,8 +2,9 @@ import * as React from 'react';
 import { PageContainer } from '../components/ui';
 import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
-import { NextPage, GetServerSideProps } from 'next';
+import { NextPage } from 'next';
 import { withReduxDynamicModules } from '@cupcake/webcore';
+import { getProfileModule } from '@cupcake/profile.module';
 
 const Title = styled('h1')`
   font-size: 56px;
@@ -35,4 +36,4 @@ const Home: NextPage<HomeProps> = () => {
   );
 };
 
-export default withReduxDynamicModules(Home, []);
+export default withReduxDynamicModules(Home, [getProfileModule()]);

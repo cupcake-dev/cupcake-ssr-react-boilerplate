@@ -3,7 +3,7 @@ import { signInActions, ActionTypes } from './signin.actions';
 import { selectSignInState } from './signin.selectors';
 import { put, select, getContext, call, takeLatest } from 'redux-saga/effects';
 import { ApiService, AuthTokensInterface } from '@cupcake/common';
-import { authTokenActions } from '@cupcake/auth-token.module';
+import { authTokensActions } from './../authTokens/auth-tokens.actions';
 import { AxiosResponse } from 'axios';
 
 function* handleSignIn(action: ReturnType<typeof signInActions.SignIn>) {
@@ -17,7 +17,7 @@ function* handleSignIn(action: ReturnType<typeof signInActions.SignIn>) {
       'auth/signIn',
       dto,
     );
-    yield put(authTokenActions.SetToken(tokensResponse.data));
+    yield put(authTokensActions.SetToken(tokensResponse.data));
     yield put(signInActions.SignInSuccess());
   } catch (e) {
     yield put(signInActions.SignInFailure());

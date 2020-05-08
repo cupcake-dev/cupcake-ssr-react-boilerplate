@@ -1,7 +1,7 @@
 {
-  "name": "@cupcake/auth-token.module",
+  "name": "@cupcake/profile.module",
   "version": "0.1.0",
-  "description": "Redux module for storing JWT token",
+  "description": "Redux module for storing user profile",
   "main": "./dist/index.js",
   "license": "MIT",
   "private": false,

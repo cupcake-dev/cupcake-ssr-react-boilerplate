@@ -7,4 +7,14 @@ import { signInActions } from './signin/signin.actions';
 import * as signUpSelectors from './signup/signup.selectors';
 import { signUpActions } from './signup/signup.actions';
 
-export { signInSelectors, signInActions, signUpSelectors, signUpActions };
+import * as authTokensSelectors from './authTokens/auth-tokens.selectors';
+import { authTokensActions } from './authTokens/auth-tokens.actions';
+
+export {
+  signInSelectors,
+  signInActions,
+  signUpSelectors,
+  signUpActions,
+  authTokensSelectors,
+  authTokensActions,
+};
