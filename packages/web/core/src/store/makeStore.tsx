@@ -7,6 +7,7 @@ import {
   selectAuthToken,
   authTokenActions,
 } from '@cupcake/auth-token.module';
+
 import { AppServicesContainer } from '@cupcake/common';
 import axios from 'axios';
 
@@ -21,7 +22,6 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
   const sagaExtension = getSagaExtension<AppServicesContainer>(
     appServicesContainer,
   );
-  // @ts-ignore
 
   const store: IModuleStore<any> = createStore(
     {
@@ -49,18 +49,24 @@ export function withReduxDynamicModules(
   WithReduxDynamicModules.getInitialProps = async (context: any) => {
     const { store } = context;
     store.addModules(modules);
-    if (context.req) {
+    const { req } = context;
+    if (req) {
       try {
-        const tokens = await axios.post(
-          'http://localhost:3000/api/auth/refresh_token',
-        );
-        //console.log('tokens', tokens);
+        const cookie = req.headers.cookie;
+        const tokens = await axios({
+          method: 'post',
+          url: 'http://localhost:8000/auth/refresh_token',
+          headers: { cookie },
+        });
         store.dispatch({
           type: '[auth-token] Set token',
-          payload: 'server token',
+          payload: tokens.data.accessToken,
         });
       } catch (e) {
-        console.log('tokens not getted', e);
+        store.dispatch({
+          type: '[auth-token] Set token',
+          payload: '',
+        });
       }
     }
 

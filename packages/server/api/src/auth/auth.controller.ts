@@ -60,7 +60,6 @@ export class AuthController {
   @Post('refresh_token')
   async refreshToken(@Req() req, @Res() res: Response) {
     const refreshToken = req.cookies.jid;
-    console.log('refresh ', refreshToken);
     const tokens = await this.authService.refresh(refreshToken);
     res.cookie('jid', tokens.refreshToken, { httpOnly: true });
     res.send(mapClasses(tokens, AuthTokenDto));
