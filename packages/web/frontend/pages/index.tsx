@@ -4,10 +4,14 @@ import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 import { NextPage } from 'next';
 import { withReduxDynamicModules } from '@cupcake/webcore';
-import { getProfileModule } from '@cupcake/profile.module';
+import { getProfileModule, selectUserEmail } from '@cupcake/profile.module';
+import { useSelector } from 'react-redux';
 
 const Title = styled('h1')`
   font-size: 56px;
+`;
+const SubTitle = styled('h2')`
+  font-size: 28px;
 `;
 const Main = styled('main')`
   margin: 60px 0;
@@ -18,11 +22,14 @@ const Main = styled('main')`
 export interface HomeProps {}
 
 const Home: NextPage<HomeProps> = () => {
+  const email = useSelector(selectUserEmail);
+
   return (
     <Layout>
       <PageContainer>
         <Main>
           <Title>Welcome to Cupcake Development boilerplate</Title>
+          {email && <SubTitle>{`You logged in as: ${email}`}</SubTitle>}
           <p>
             Get started by editing this <code>pages/index.js</code>
           </p>

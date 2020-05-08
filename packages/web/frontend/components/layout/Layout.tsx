@@ -2,23 +2,25 @@ import Head from 'next/head';
 import * as React from 'react';
 import Header from '../header/Header';
 import { useSelector } from 'react-redux';
-import { selectUserEmail } from '@cupcake/profile.module';
+import { authTokensSelectors } from '@cupcake/auth.module';
 
 export interface LayoutProps {
   children?: any;
 }
 
 const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
-  const userEmail = useSelector(selectUserEmail);
+  const isUserLoggedIn = useSelector(authTokensSelectors.selectAuthToken)
+    ? true
+    : false;
 
   return (
     <>
       <Head>
         <title>Cupcake development boilerplate</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Header userEmail={userEmail} />
+      <Header isUserLoggedIn={isUserLoggedIn} />
       {props.children}
 
       <style jsx global>{`

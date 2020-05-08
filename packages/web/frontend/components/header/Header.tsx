@@ -25,20 +25,20 @@ const NavBar = styled('div')`
 `;
 
 export interface HeaderProps {
-  userEmail: string;
+  isUserLoggedIn: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ userEmail }: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({ isUserLoggedIn }: HeaderProps) => {
   const dispatch = useDispatch();
 
   const handleLogout = useCallback(() => {
     dispatch(authTokensActions.Logout());
   }, []);
 
-  if (userEmail) {
+  if (isUserLoggedIn) {
     return (
       <HeaderContainer>
-        <Status>You are logged in as: {userEmail}</Status>
+        <Status>You are logged in</Status>
         <NavBar>
           <Link href="/">
             <Button>Home</Button>
