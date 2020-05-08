@@ -14,6 +14,7 @@ import {
   signUpActions,
   SignUpStatusEnum,
 } from '@cupcake/auth.module';
+import { getProfileModule } from '@cupcake/profile.module';
 import {
   PageContainer,
   Form,
@@ -139,4 +140,4 @@ const SignUp: React.FC<SignUpProps> = () => {
   );
 };
 
-export default withReduxDynamicModules(SignUp, []);
+export default withReduxDynamicModules(SignUp, [getProfileModule()]);

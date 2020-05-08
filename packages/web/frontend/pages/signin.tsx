@@ -9,11 +9,11 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { withReduxDynamicModules } from '@cupcake/webcore';
 import {
-  getAuthModule,
   signInSelectors,
   signInActions,
   SignInStatusEnum,
 } from '@cupcake/auth.module';
+import { getProfileModule } from '@cupcake/profile.module';
 
 import {
   PageContainer,
@@ -109,4 +109,4 @@ const SignIn: React.FC<SignInProps> = () => {
   );
 };
 
-export default withReduxDynamicModules(SignIn, []);
+export default withReduxDynamicModules(SignIn, [getProfileModule()]);
