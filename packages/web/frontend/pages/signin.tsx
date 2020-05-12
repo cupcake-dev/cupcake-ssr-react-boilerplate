@@ -13,8 +13,6 @@ import {
   signInActions,
   SignInStatusEnum,
 } from '@cupcake/auth.module';
-import { getProfileModule } from '@cupcake/profile.module';
-
 import {
   PageContainer,
   Form,
@@ -67,6 +65,7 @@ const SignIn: React.FC<SignInProps> = () => {
   useEffect(() => {
     if (status === SignInStatusEnum.SUCCESS) {
       setIsPending(false);
+      dispatch(signInActions.SignInFormReset());
       router.replace('/');
     } else if (status === SignInStatusEnum.FAIL) {
       setIsPending(false);

@@ -13,6 +13,14 @@ export function signUpReducer(
   action: ActionsAll,
 ): SignUpState {
   switch (action.type) {
+    case ActionTypes.SIGN_UP_FORM_RESET:
+      return {
+        ...state,
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        status: SignUpStatusEnum.DRAFT,
+      };
     case ActionTypes.SIGN_UP:
       return {
         ...state,

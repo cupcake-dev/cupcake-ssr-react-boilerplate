@@ -6,16 +6,17 @@ import { ApiService } from '@cupcake/common';
 
 function* handleGetUserProfile() {
   try {
-    console.log('saga start');
+    console.log('Get user Profile start');
     const api: ApiService = yield getContext('api');
     const userDataResponse: AxiosResponse<any> = yield call(
       [api, 'get'],
       'auth/profile',
     );
     yield put(profileActions.SetUserProfile(userDataResponse.data));
-    console.log('saga end');
+    console.log('Get user Profile end');
   } catch (e) {
-    console.log('saga error');
+    console.log(e.message);
+    yield put(profileActions.SetUserProfile({ email: '', userId: '' }));
   }
 }
 

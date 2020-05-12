@@ -39,11 +39,7 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
 
   appServicesContainer.setStore(store);
   appServicesContainer.api.setGetAuthTokensHandler(() => {
-    return {
-      // @ts-ignore
-      accessToken: (store.getState() as AuthAwareState).authTokens
-        .token as string,
-    };
+    return (store.getState() as AuthAwareState).authTokens.token;
   });
 
   return store;
@@ -73,15 +69,13 @@ export function withReduxDynamicModules(
           url: 'http://localhost:8000/auth/refresh_token',
           headers: { cookie },
         });
-        store.dispatch({
-          type: '[auth-token] Set token',
-          payload: tokens.data.accessToken,
-        });
+        if (tokens.data.accessToken !== '') {
+          store.dispatch(authTokensActions.SetToken(tokens.data));
+        } else {
+          store.dispatch(authTokensActions.RemoveToken());
+        }
       } catch (e) {
-        store.dispatch({
-          type: '[auth-token] Set token',
-          payload: '',
-        });
+        store.dispatch(authTokensActions.RemoveToken());
       }
     }
     let pageProps = {};

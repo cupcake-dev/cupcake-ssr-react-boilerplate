@@ -14,6 +14,9 @@ const HeaderContainer = styled('header')`
 const Status = styled('h2')`
   margin-left: 30px;
   color: #fff;
+  @media (max-width: 640px) {
+    font-size: 18px;
+  }
 `;
 const NavBar = styled('div')`
   display: flex;
@@ -38,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ isUserLoggedIn }: HeaderProps) => {
   if (isUserLoggedIn) {
     return (
       <HeaderContainer>
-        <Status>You are logged in</Status>
+        <Status>Status: logged in</Status>
         <NavBar>
           <Link href="/">
             <Button>Home</Button>
@@ -51,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ isUserLoggedIn }: HeaderProps) => {
 
   return (
     <HeaderContainer>
-      <Status>You are not logged in</Status>
+      <Status>Status: logged out</Status>
       <NavBar>
         <Link href="/">
           <Button>Home</Button>

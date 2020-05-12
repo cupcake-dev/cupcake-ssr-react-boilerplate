@@ -1,4 +1,4 @@
-import { selectUserId } from '@cupcake/profile.module';
+import { selectUserId, profileActions } from '@cupcake/profile.module';
 import { authTokensActions, ActionTypes } from './auth-tokens.actions';
 import { AxiosResponse } from 'axios';
 import { getContext, call, put, takeLatest, select } from 'redux-saga/effects';
@@ -6,7 +6,6 @@ import { ApiService } from '@cupcake/common';
 
 function* handleLogout() {
   try {
-    console.log('saga start');
     const api: ApiService = yield getContext('api');
     const userId = yield select(selectUserId);
     const dto = { id: userId };
@@ -17,9 +16,9 @@ function* handleLogout() {
     );
     console.log(logoutResponse.data);
     yield put(authTokensActions.RemoveToken());
-    console.log('saga end');
+    yield put(profileActions.SetUserProfile({ email: '', userId: '' }));
   } catch (e) {
-    console.log('saga error');
+    console.log('Logout error');
   }
 }
 

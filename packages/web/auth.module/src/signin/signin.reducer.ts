@@ -12,6 +12,13 @@ export function signInReducer(
   action: ActionsAll,
 ): SignInState {
   switch (action.type) {
+    case ActionTypes.SIGN_IN_FORM_RESET:
+      return {
+        ...state,
+        email: '',
+        password: '',
+        status: SignInStatusEnum.DRAFT,
+      };
     case ActionTypes.SIGN_IN:
       return {
         ...state,

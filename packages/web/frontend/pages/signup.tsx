@@ -9,12 +9,10 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { withReduxDynamicModules } from '@cupcake/webcore';
 import {
-  getAuthModule,
   signUpSelectors,
   signUpActions,
   SignUpStatusEnum,
 } from '@cupcake/auth.module';
-import { getProfileModule } from '@cupcake/profile.module';
 import {
   PageContainer,
   Form,
@@ -87,6 +85,7 @@ const SignUp: React.FC<SignUpProps> = () => {
   useEffect(() => {
     if (status === SignUpStatusEnum.SUCCESS) {
       setIsPending(false);
+      dispatch(signUpActions.SignUpFormReset());
       router.replace('/');
     } else if (status === SignUpStatusEnum.FAIL) {
       setIsPending(false);

@@ -7,6 +7,7 @@ export const enum ActionTypes {
   SIGN_IN = '[auth] Sign in',
   SIGN_IN_SUCCESS = '[auth] Sign in success',
   SIGN_IN_FAILURE = '[auth] Sign in failure',
+  SIGN_IN_FORM_RESET = '[auth] Sign in form reset',
 }
 
 export const signInActions = {
@@ -16,6 +17,7 @@ export const signInActions = {
   SignIn: () => createAction(ActionTypes.SIGN_IN),
   SignInSuccess: () => createAction(ActionTypes.SIGN_IN_SUCCESS),
   SignInFailure: () => createAction(ActionTypes.SIGN_IN_FAILURE),
+  SignInFormReset: () => createAction(ActionTypes.SIGN_IN_FORM_RESET),
 };
 
 export type ActionsAll = ActionsUnion<typeof signInActions>;
