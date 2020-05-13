@@ -61,7 +61,7 @@ export class AuthService {
       };
     }
 
-    // here refresh token is valid, so we can send back an access token
+    // Refresh token is valid, so we can send back an access token
     const user = await this.usersService.findOneByEmail(payload.email);
     if (!user) {
       return {

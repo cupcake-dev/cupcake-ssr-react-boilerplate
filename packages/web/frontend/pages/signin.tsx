@@ -35,7 +35,6 @@ const SignIn: React.FC<SignInProps> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // TODO useCallback and main logic
   const handleSignInSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -51,12 +50,10 @@ const SignIn: React.FC<SignInProps> = () => {
   );
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    // dispatch an action to change login in state...
     dispatch(signInActions.ChangeEmail(e.target.value));
   }, []);
   const handlePaswordChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      // dispatch an action to change password in state...
       dispatch(signInActions.ChangePassword(e.target.value));
     },
     [],

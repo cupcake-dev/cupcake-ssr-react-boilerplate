@@ -11,7 +11,6 @@ export function authTokensReducer(
 ): AuthTokensState {
   switch (action.type) {
     case ActionTypes.HYDRATE:
-      console.log(action);
       if (!action.payload) {
         return state;
       }

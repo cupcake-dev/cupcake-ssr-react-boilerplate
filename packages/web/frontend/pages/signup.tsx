@@ -38,7 +38,6 @@ const SignUp: React.FC<SignUpProps> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // TODO useCallback and main logic
   const handleSignUpSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -64,19 +63,16 @@ const SignUp: React.FC<SignUpProps> = () => {
   );
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    // dispatch an action to change Email in state...
     dispatch(signUpActions.ChangeEmail(e.target.value));
   }, []);
   const handlePasswordChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      // dispatch an action to change Password in state...
       dispatch(signUpActions.ChangePassword(e.target.value));
     },
     [],
   );
   const handlePasswordConfirmChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      // dispatch an action to change PasswordConfirm in state...
       dispatch(signUpActions.ChangePasswordConfirm(e.target.value));
     },
     [],

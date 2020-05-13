@@ -20,7 +20,7 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
     API_URL:
       typeof window === 'undefined'
         ? 'http://localhost:8000'
-        : 'http://localhost:3000/api/', // TODO: need to get from env
+        : 'http://localhost:3000/api/',
   });
   const sagaExtension = getSagaExtension<AppServicesContainer>(
     appServicesContainer,

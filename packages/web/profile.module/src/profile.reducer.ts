@@ -12,7 +12,6 @@ export function profileReducer(
 ): ProfileState {
   switch (action.type) {
     case ActionTypes.HYDRATE:
-      console.log(action);
       if (!action.payload) {
         return state;
       }

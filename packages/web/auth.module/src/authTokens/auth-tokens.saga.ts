@@ -14,7 +14,6 @@ function* handleLogout() {
       'auth/revoke_token',
       dto,
     );
-    console.log(logoutResponse.data);
     yield put(authTokensActions.RemoveToken());
     yield put(profileActions.SetUserProfile({ email: '', userId: '' }));
   } catch (e) {
