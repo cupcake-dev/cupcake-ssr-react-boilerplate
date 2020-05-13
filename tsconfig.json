@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "baseUrl": "./packages",
+    "paths": {
+      "@cupcake/profile.module": ["web/profile.module/src"],
+      "@cupcake/auth.module": ["web/auth.module/src"],
+      "@cupcake/webcore": ["web/core/src"]
+    }
+  },
+  "exclude": ["dist", "node_modules", ".nest"],
+  "include": ["src"]
+}

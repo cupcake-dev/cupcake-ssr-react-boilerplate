@@ -1,0 +1,26 @@
+diff --git a/node_modules/redux-dynamic-modules-saga/lib/SagaExtension.js b/node_modules/redux-dynamic-modules-saga/lib/SagaExtension.js
+index 61aed71..1078e12 100644
+--- a/node_modules/redux-dynamic-modules-saga/lib/SagaExtension.js
++++ b/node_modules/redux-dynamic-modules-saga/lib/SagaExtension.js
+@@ -23,6 +23,9 @@ function getSagaExtension(sagaContext, onError) {
+     var _sagaManager = redux_dynamic_modules_core_1.getRefCountedManager(SagaManager_1.getSagaManager(sagaMiddleware), SagaComparer_1.sagaEquals);
+     return {
+         middleware: [sagaMiddleware],
++
++        tasks: _sagaManager.tasks,
++
+         onModuleManagerCreated: function (moduleManager) {
+             if (sagaContext) {
+                 sagaContext["moduleManager"] = moduleManager;
+diff --git a/node_modules/redux-dynamic-modules-saga/lib/SagaManager.js b/node_modules/redux-dynamic-modules-saga/lib/SagaManager.js
+index abb0535..cf44fdd 100644
+--- a/node_modules/redux-dynamic-modules-saga/lib/SagaManager.js
++++ b/node_modules/redux-dynamic-modules-saga/lib/SagaManager.js
+@@ -15,6 +15,7 @@ var redux_dynamic_modules_core_1 = require("redux-dynamic-modules-core");
+ function getSagaManager(sagaMiddleware) {
+     var tasks = redux_dynamic_modules_core_1.getMap(SagaComparer_1.sagaEquals);
+     return {
++        tasks,
+         getItems: function () { return __spreadArrays(tasks.keys); },
+         add: function (sagas) {
+             if (!sagas) {

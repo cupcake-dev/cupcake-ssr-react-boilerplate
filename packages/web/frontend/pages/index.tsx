@@ -1,204 +1,105 @@
-import Head from 'next/head'
-import * as React from "react";
+import * as React from 'react';
+import { PageContainer } from '../components/ui';
+import styled from 'styled-components';
+import Layout from '../components/layout/Layout';
+import { NextPage } from 'next';
+import { withReduxDynamicModules } from '@cupcake/webcore';
+import {
+  getProfileModule,
+  selectUserEmail,
+  profileActions,
+} from '@cupcake/profile.module';
+import { useSelector } from 'react-redux';
 
-const Home: React.FC<any> = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const Title = styled('h1')`
+  font-size: 56px;
+  @media (max-width: 640px) {
+    font-size: 40px;
+  }
+`;
+const SubTitle = styled('h2')`
+  font-size: 28px;
+`;
+const Main = styled('main')`
+  margin: 60px 0;
+  text-align: center;
+  font-size: 20px;
+`;
+const ParagraphHeader = styled.h3`
+  text-align: start;
+  padding: 0 30px;
+`;
+const Paragraph = styled.p`
+  text-align: start;
+  padding: 0 30px;
+`;
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+export interface HomeProps {}
 
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
+const Home: NextPage<HomeProps> = () => {
+  const email = useSelector(selectUserEmail);
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+  return (
+    <Layout>
+      <PageContainer>
+        <Main>
+          <Title>Welcome to Cupcake Development boilerplate</Title>
+          {email && <SubTitle>{`You are logged in as: ${email}`}</SubTitle>}
+          <ParagraphHeader>Overview</ParagraphHeader>
+          <Paragraph>
+            This boilerplate is a use case of combining React JS with Server
+            Side Rendering (Next JS framework), Redux with Redux-Dynamic-Modules
+            as a state management system and backend Node.js framework NestJS.
+            It could serve as a starter kit for development of medium size and
+            large projects.
+          </Paragraph>
+          <Paragraph>
+            Read full description at{' '}
+            <a href="#">Cupcake Developnemt Boilerplate Github Page.</a>
+          </Paragraph>
+          <ParagraphHeader>Our Motivation</ParagraphHeader>
+          <Paragraph>
+            Nowadays, a lot of commercial projects require the SEO and
+            performance optimization. Additionally, it’s necessary to have code
+            splitting for large projects. Frameworks and libraries that we used
+            for Cupcake boilerplate were selected according these requirements.
+          </Paragraph>
+          <Paragraph>
+            So, Next JS has all benefits that come with React JS and helps us
+            with server side rendering and routing, also it has automatic code
+            splitting for faster page loading.
+          </Paragraph>
+          <Paragraph>
+            For state management we decided to use the most popular library -
+            Redux, but we added Redux Dynamic Modules as a tool for code
+            splitting. Thus, Redux modules (reducers and middleware) can be
+            dynamically added or removed to the Redux store at runtime. Also it
+            can be reused if our customer want to make a mobile application.
+          </Paragraph>
+          <Paragraph>
+            On the server-side, we need a framework that helps to build
+            scalable, easily maintainable, well testable applications. Nest JS
+            is ideal candidate for this work, because it provides a great
+            application architecture out of the box and has a support of the
+            other popular libraries such as TypeORM or Passport JS.
+          </Paragraph>
+          <Paragraph>
+            And last but not least, Lerna is a perfect tool for managing
+            projects and organizing their codebases into mono-repository, that
+            allows to share node_modules among our packages.
+          </Paragraph>
+          <Paragraph>
+            Combining all these technologies helps us to develop modern and
+            scalable projects, which meet our clients’ requirements.
+          </Paragraph>
+        </Main>
+      </PageContainer>
+    </Layout>
+  );
+};
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
+Home.getInitialProps = async ({ store }) => {
+  store.dispatch(profileActions.GetUserProfile());
+};
 
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
-
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+export default withReduxDynamicModules(Home, [getProfileModule()]);

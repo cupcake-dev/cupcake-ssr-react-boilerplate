@@ -1,0 +1,1 @@
+export { withReduxDynamicModules } from './makeStore';

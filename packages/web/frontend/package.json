@@ -1,20 +1,45 @@
 {
-  "name": "@capcake/frontend",
+  "name": "@cupcake/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:dev": "next dev",
+    "start:dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@types/nookies": "^2.0.3",
+    "@types/react-redux": "^7.1.7",
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
     "next": "9.3.4",
+    "next-redux-wrapper": "6.0.0-rc.6",
+    "nookies": "^2.2.2",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/node": "^13.11.0",
     "@types/react": "^16.9.32",
+    "@types/styled-components": "^5.0.1",
+    "babel-plugin-styled-components": "^1.10.7",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "http-proxy-middleware": "^1.0.3",
     "typescript": "^3.8.3"
+  },
+  "babel": {
+    "presets": [
+      "next/babel"
+    ],
+    "plugins": [
+      [
+        "babel-plugin-styled-components"
+      ]
+    ]
   }
 }
