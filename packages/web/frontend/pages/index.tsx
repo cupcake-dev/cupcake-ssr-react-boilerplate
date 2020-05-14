@@ -55,7 +55,7 @@ const Home: NextPage<HomeProps> = () => {
           </Paragraph>
           <Paragraph>
             Read full description at{' '}
-            <a href="#">Cupcake Developnemt Boilerplate Github Page.</a>
+            <a href="https://github.com/cupcake-dev/cupcake-ssr-react-boilerplate">Cupcake Developnemt Boilerplate Github Page.</a>
           </Paragraph>
           <ParagraphHeader>Our Motivation</ParagraphHeader>
           <Paragraph>
