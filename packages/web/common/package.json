@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "axios-auth-refresh": "^2.2.6"
   }
 }
