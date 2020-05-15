@@ -8,7 +8,7 @@ import {
   AuthAwareState,
 } from '@cupcake/auth.module';
 import { END } from 'redux-saga';
-import { AppServicesContainer } from '@cupcake/common';
+import { AppServicesContainer, AuthTokensInterface } from '@cupcake/common';
 import axios from 'axios';
 
 import { useStore } from 'react-redux';
@@ -41,6 +41,11 @@ export const makeStoreFactory: (modules: ISagaModule<any>[]) => MakeStore = (
   appServicesContainer.api.setGetAuthTokensHandler(() => {
     return (store.getState() as AuthAwareState).authTokens.token;
   });
+  appServicesContainer.api.setDispatchSetTokenAction(
+    (token: AuthTokensInterface) => {
+      store.dispatch(authTokensActions.SetToken(token));
+    },
+  );
 
   return store;
 };
