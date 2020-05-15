@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { AppServiceBaseInterface } from './app-service-base.interface';
 import { AuthTokensInterface } from './../contarcts';
 
@@ -11,9 +12,34 @@ export class ApiService implements AppServiceBaseInterface {
       timeout: 5000,
       withCredentials: true,
     });
+    createAuthRefreshInterceptor(this.instance, this.refreshAuthLogic);
   }
   private instance!: AxiosInstance;
   private getAuthTokens?: () => AuthTokensInterface | null;
+  private dispatchSetTokenAction?: (token: AuthTokensInterface) => void;
+
+  private refreshAuthLogic = async (failedRequest: any) => {
+    try {
+      const refreshResponse = await this.post('auth/refresh_token');
+      if (refreshResponse.data.accessToken !== '') {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.dispatchSetTokenAction!(refreshResponse.data);
+        failedRequest.config.headers.Authorization = `Bearer ${refreshResponse.data.accessToken}`;
+        return Promise.resolve();
+      } else {
+        return Promise.reject('Refresh token invalid');
+      }
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+
+  public setDispatchSetTokenAction(
+    dispatchSetTokenAction: (token: AuthTokensInterface) => void,
+  ) {
+    this.dispatchSetTokenAction = dispatchSetTokenAction;
+  }
+
   public setGetAuthTokensHandler(
     getAuthTokens: () => AuthTokensInterface | null,
   ) {
